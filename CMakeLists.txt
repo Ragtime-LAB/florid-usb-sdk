@@ -14,7 +14,7 @@ include(SdkDependencies)
 # ── 5_Protocols (usb_protocol INTERFACE target) ──
 # Prevent 5_Protocols from also building its examples (they try to FetchContent HySerial)
 set(BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
-add_subdirectory(../../5_Protocols ${CMAKE_CURRENT_BINARY_DIR}/5_Protocols)
+add_subdirectory(protocols ${CMAKE_CURRENT_BINARY_DIR}/protocols)
 
 # ── Library ──
 add_subdirectory(src)
