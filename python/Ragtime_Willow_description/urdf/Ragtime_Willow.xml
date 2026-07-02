@@ -1,0 +1,57 @@
+<mujoco model="Ragtime_Willow_description">
+  <compiler angle="radian"/>
+
+  <asset>
+    <mesh name="base_link" content_type="model/stl" file="../meshes/base_link.STL"/>
+    <mesh name="link1" content_type="model/stl" file="../meshes/link1.STL"/>
+    <mesh name="link2" content_type="model/stl" file="../meshes/link2.STL"/>
+    <mesh name="link3_mujoco" content_type="model/stl" file="../meshes/link3_mujoco.STL"/>
+    <mesh name="link4" content_type="model/stl" file="../meshes/link4.STL"/>
+    <mesh name="link5" content_type="model/stl" file="../meshes/link5.STL"/>
+    <mesh name="link6" content_type="model/stl" file="../meshes/link6.STL"/>
+  </asset>
+
+  <worldbody>
+    <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="base_link"/>
+    <body name="link1" pos="0 0 0.09675">
+      <inertial pos="-5.637e-05 0.00145355 0.0392134" quat="0.997519 -0.0702062 0.00492759 -0.00137324" mass="0.534457" diaginertia="0.000438864 0.000342624 0.000300052"/>
+      <joint name="joint1" pos="0 0 0" axis="0 0 1" range="-3.14 3.14"/>
+      <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link1"/>
+      <body name="link2" pos="0 0 0.0465">
+        <inertial pos="-0.141043 -0.00482298 0" quat="-0.000941784 0.707066 0.00094366 0.707146" mass="0.776198" diaginertia="0.00810228 0.0073416 0.00101849"/>
+        <joint name="joint2" pos="0 0 0" axis="0 1 0" range="0 3.14"/>
+        <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link2"/>
+        <body name="link3" pos="-0.285 -0.002625 0">
+          <inertial pos="0.110561 0.00401387 0.0325005" quat="0.24455 0.602976 0.201452 0.732143" mass="1.18071" diaginertia="0.0149686 0.0149373 0.000953574"/>
+          <joint name="joint3" pos="0 0 0" axis="0 -1 0" range="0 3.14"/>
+          <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link3_mujoco"/>
+          <body name="link4" pos="0.24818 0 0.0528">
+            <inertial pos="0.0357668 0.00104537 0.037" quat="-0.00456151 0.398543 0.00375313 0.917131" mass="0.473847" diaginertia="0.000870771 0.000710308 0.0003217"/>
+            <joint name="joint4" pos="0 0 0" axis="0 1 0" range="-1.3 1.3"/>
+            <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link4"/>
+            <body name="link5" pos="0.062759 0.002625 0.041">
+              <inertial pos="0.003542 -4.912e-05 -0.0315437" quat="0.997039 -0.00312983 -0.0654748 0.0402012" mass="0.374298" diaginertia="0.00017859 0.000176245 0.000150815"/>
+              <joint name="joint5" pos="0 0 0" axis="0 0 -1" range="-1.57 1.57"/>
+              <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link5"/>
+              <body name="link6" pos="0.18848 -7.8693e-05 -0.034078">
+                <inertial pos="-0.0947567 9.607e-05 -0.00192973" quat="0.160505 0.68863 0.159769 0.68884" mass="0.805211" diaginertia="0.00132272 0.00121868 0.000561929"/>
+                <joint name="joint6" pos="0 0 0" axis="-1 0 0" range="-1.57 1.57"/>
+                <geom type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="link6"/>
+                <site name="ee_site" pos="0 0 0" quat="1 0 0 0" size="0.02" rgba="0 0 1 0.3"/>
+                <body name="wrist_camera_body" pos="0.04 0 0.03" quat="1 0 0 0">
+                  <geom name="wrist_camera_body_geom" type="box" size="0.018 0.014 0.01"
+                    rgba="0.05 0.05 0.05 1" contype="0" conaffinity="0" density="0"/>
+                  <geom name="wrist_camera_lens_geom" type="sphere" pos="0.018 0 0" size="0.006"
+                    rgba="0.02 0.02 0.02 1" contype="0" conaffinity="0" density="0"/>
+                  <camera name="wrist_camera" pos="0.022 0 0" xyaxes="0 -1 0 0 0 1" fovy="60"/>
+                  <site name="wrist_camera_site" pos="0.022 0 0" xyaxes="0 -1 0 0 0 1"
+                    size="0.008" rgba="0 1 0 0.5"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

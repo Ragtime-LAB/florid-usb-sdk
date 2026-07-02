@@ -1,0 +1,70 @@
+<mujoco model="Ragtime_Willow_scene">
+  <include file="Ragtime_Willow.xml"/>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4"
+      rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane" contype="1" conaffinity="15"/>
+
+    <body name="cube_red" pos="0.22 0.10 0.025">
+      <freejoint/>
+      <geom name="cube_red_geom" type="box" size="0.025 0.025 0.025"
+        mass="0.06" rgba="0.90 0.15 0.12 1"
+        friction="1.2 0.05 0.005" contype="1" conaffinity="15"/>
+    </body>
+
+    <body name="cube_blue" pos="0.30 -0.08 0.020">
+      <freejoint/>
+      <geom name="cube_blue_geom" type="box" size="0.020 0.020 0.020"
+        mass="0.04" rgba="0.12 0.35 0.95 1"
+        friction="1.2 0.05 0.005" contype="1" conaffinity="15"/>
+    </body>
+
+    <body name="rect_green" pos="0.34 0.06 0.020" quat="0.9659 0 0 0.2588">
+      <freejoint/>
+      <geom name="rect_green_geom" type="box" size="0.055 0.018 0.020"
+        mass="0.08" rgba="0.15 0.75 0.25 1"
+        friction="1.2 0.05 0.005" contype="1" conaffinity="15"/>
+    </body>
+
+    <body name="rect_yellow_tall" pos="0.18 -0.13 0.045" quat="0.9239 0 0 0.3827">
+      <freejoint/>
+      <geom name="rect_yellow_tall_geom" type="box" size="0.020 0.020 0.045"
+        mass="0.07" rgba="0.95 0.78 0.12 1"
+        friction="1.2 0.05 0.005" contype="1" conaffinity="15"/>
+    </body>
+
+    <body name="flat_purple" pos="0.40 -0.02 0.012" quat="0.9914 0 0 -0.1305">
+      <freejoint/>
+      <geom name="flat_purple_geom" type="box" size="0.060 0.030 0.012"
+        mass="0.05" rgba="0.55 0.20 0.85 1"
+        friction="1.2 0.05 0.005" contype="1" conaffinity="15"/>
+    </body>
+
+    <body name="demo_platform" pos="0.30 0.00 0.006">
+      <geom name="demo_platform_geom" type="box" size="0.17 0.15 0.006"
+        rgba="0.25 0.25 0.25 0.45"
+        friction="1.0 0.05 0.005" contype="1" conaffinity="15"/>
+    </body>
+
+    <body name="mocap_target" mocap="true" pos="0.22 0 0.14" quat="1 0 0 0">
+      <geom name="mocap_sphere" type="sphere" size="0.04"
+        rgba="1 0 0 0.25" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor name="act_joint1" joint="joint1" ctrllimited="true" ctrlrange="-100 100" gear="1"/>
+    <motor name="act_joint2" joint="joint2" ctrllimited="true" ctrlrange="-100 100" gear="1"/>
+    <motor name="act_joint3" joint="joint3" ctrllimited="true" ctrlrange="-100 100" gear="1"/>
+    <motor name="act_joint4" joint="joint4" ctrllimited="true" ctrlrange="-100 100" gear="1"/>
+    <motor name="act_joint5" joint="joint5" ctrllimited="true" ctrlrange="-100 100" gear="1"/>
+    <motor name="act_joint6" joint="joint6" ctrllimited="true" ctrlrange="-100 100" gear="1"/>
+  </actuator>
+</mujoco>

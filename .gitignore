@@ -1,0 +1,35 @@
+cmake-build*
+florid_usb.cpython*
+.cache
+.idea
+cmake-build*
+# editors
+.vscode
+*.swp
+*~
+
+# python
+.venv
+
+__pycache__/
+
+# build
+build/*
+
+# docs
+doc/_build*
+
+# Jetbrains
+.idea
+
+target
+build
+
+*.log
+cmake-build*
+
+out
+compile_commands.json
+python/plots
+__pycache__
+

@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.21)
+project(florid_usb_sdk VERSION 0.1.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+option(BUILD_EXAMPLES "Build example programs" ON)
+option(BUILD_PYTHON "Build Python bindings (requires numpy)" OFF)
+
+# ── Dependencies ──
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include(SdkDependencies)
+
+# ── 5_Protocols (usb_protocol INTERFACE target) ──
+# Prevent 5_Protocols from also building its examples (they try to FetchContent HySerial)
+set(BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
+add_subdirectory(../../5_Protocols ${CMAKE_CURRENT_BINARY_DIR}/5_Protocols)
+
+# ── Library ──
+add_subdirectory(src)
+
+# ── Python bindings ──
+if(BUILD_PYTHON)
+    find_package(Python COMPONENTS Interpreter Development REQUIRED)
+    include(FetchContent)
+    FetchContent_Declare(pybind11
+        GIT_REPOSITORY https://github.com/pybind/pybind11.git
+        GIT_TAG v2.13.6
+        GIT_SHALLOW true
+    )
+    FetchContent_MakeAvailable(pybind11)
+    add_subdirectory(python)
+endif()
+
+# ── Examples ──
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()

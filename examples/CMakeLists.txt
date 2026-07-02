@@ -1,0 +1,2 @@
+add_executable(simple_control simple_control.cpp)
+target_link_libraries(simple_control PRIVATE florid_usb)
