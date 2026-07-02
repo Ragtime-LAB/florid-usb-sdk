@@ -1,0 +1,3 @@
+[submodule "protocols"]
+	path = protocols
+	url = https://github.com/Ragtime-LAB/florid-usb-protocols
