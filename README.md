@@ -189,23 +189,74 @@ arm.disconnect()
 | `home_all(timeout=0.5)` | 是 | 归零 |
 | `clear_faults(timeout=0.5)` | 是 | 清除故障 |
 
+## 获取源码
+
+```bash
+git clone https://github.com/Ragtime-LAB/florid-usb-sdk.git
+cd florid-usb-sdk
+
+# 初始化所有子模块（HySerial、protocols 及 protocols 的嵌套子模块）
+git submodule update --init --recursive
+```
+
+`--recursive` 会一并拉取 `protocols/` 内部的 `3rdparty/rpl` 嵌套子模块。
+
+如果 clone 时忘了加 `--recursive`，随时补跑即可。
+
 ## 构建（C++）
 
 ```bash
-git clone --recursive git@github.com:Ragtime-LAB/florid-usb-sdk.git
-cd florid-usb-sdk
 cmake -B build
 cmake --build build
 ```
 
 Python 绑定通过 `pip install .` 自动构建，无需手动运行 CMake。
 
-## 依赖
+## 系统依赖（需预先安装）
+
+### C++20 编译器
+
+HySerial 内部使用了 `std::format` 和 `std::span`，因此**必须使用支持 C++20 的编译器**。
+
+Ubuntu24.04及以上版本的用户可以忽略这一步；Ubuntu 22.04 默认 GCC 版本不足，建议安装 GCC 13：
+
+```bash
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install gcc-13 g++-13
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 130 \
+  --slave /usr/bin/g++ g++ /usr/bin/g++-13
+# 如需切换回系统默认编译器：
+sudo update-alternatives --config gcc
+```
+
+### 其他系统包
+
+```bash
+sudo apt install cmake liburing-dev
+```
+
+Python 绑定还需要：
+
+```bash
+sudo apt install python3-dev python3-numpy
+```
+
+| 包 | 用途 | 必需 |
+|---|---|---|
+| GCC >= 10 / Clang >= 10（C++20） | 编译 | 是 |
+| `cmake`（>= 3.21） | 构建系统 | 是 |
+| `liburing-dev` | HySerial io_uring 后端 | 是 |
+| `python3-dev` | Python C 扩展 | 仅 Python 绑定 |
+| `python3-numpy` | Python 数组接口 | 仅 Python 绑定 |
+
+其余依赖由 CMake 自动处理（git submodule / FetchContent）：
 
 | 依赖 | 来源 | 用途 |
 |---|---|---|
 | [HySerial](https://github.com/RoboMaster-DLMU-CONE/HySerial) | git submodule (`3rdparty/HySerial`) | USB 串口传输 |
 | [florid-usb-protocols](https://github.com/Ragtime-LAB/florid-usb-protocols) | git submodule (`protocols/`) | 协议栈（ProtocolStack, ReliableSession, 包定义） |
 | [rpl](https://github.com/C-One-Studio/RPL) | 内置于 `protocols/3rdparty/rpl` | RPL 序列化框架 |
+| [tl-expected](https://github.com/TartanLlama/expected) | CMake FetchContent | `std::expected` polyfill（HySerial 依赖） |
 | [unordered_dense](https://github.com/martinus/unordered_dense) | CMake FetchContent | 哈希表 |
-| [pybind11](https://github.com/pybind/pybind11) | CMake FetchContent（仅 Python 绑定） | C++/Python 绑定 |
+| [pybind11](https://github.com/pybind/pybind11) | CMake FetchContent（仅 Python） | C++/Python 绑定 |
