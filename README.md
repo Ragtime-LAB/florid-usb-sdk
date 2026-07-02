@@ -290,3 +290,7 @@ PYTHONPATH=build/python python python/example_simple.py /dev/ttyACM0
 pip install .
 python python/example_simple.py /dev/ttyACM0
 ```
+
+## 实机操作文档
+
+[详见此文档](doc/real_arm.md)
