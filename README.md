@@ -189,6 +189,36 @@ arm.disconnect()
 | `home_all(timeout=0.5)` | 是 | 归零 |
 | `clear_faults(timeout=0.5)` | 是 | 清除故障 |
 
+### Python 示例脚本
+
+`python/` 目录下提供了可直接运行的示例：
+
+| 脚本 | 说明 |
+|---|---|
+| `example_simple.py` | MIT 控制，J5 斜坡运动 @ 500 Hz |
+| `example_gripper.py` | 夹爪开合控制 |
+| `read_arm_status.py` | 持续读取并打印机械臂状态 |
+| `read_dual_status.py` | 双机械臂状态读取 |
+| `mit_pd_move_to_center.py` | MIT PD 控制移动到目标位置 |
+| `tuning_ui.py` | Tkinter 调参 GUI |
+| `teleop_mit.py` / `teleop_posvel.py` / `teleop_hybrid.py` | 主从遥操作（MIT / POSVEL / HYBRID 模式） |
+| `gravity_compensation_control.py` | 重力补偿控制 |
+| `computed_torque_sin_j12345.py` | 计算力矩 + 正弦轨迹 |
+| `test_all_api.py` | 遍历所有 API 接口的自动化测试 |
+
+CMake 构建后，通过设置 `PYTHONPATH` 运行：
+
+```bash
+PYTHONPATH=build/python python python/example_simple.py /dev/ttyACM0
+```
+
+或直接 `pip install .` 安装模块后运行：
+
+```bash
+pip install .
+python python/example_simple.py /dev/ttyACM0
+```
+
 ## 获取源码
 
 ```bash
