@@ -144,7 +144,8 @@ PYBIND11_MODULE(florid_usb, m)
              py::arg("kp"), py::arg("kd"), py::arg("control_mode") = 1,
              "Send an MIT control command. Firmware provides built-in gravity compensation; "
              "`tau` is additional feed-forward torque on top of gravity.\n"
-             "control_mode: 0=no_data, 1=joint_position (default), 3=torque.\n"
+             "control_mode: bit[1:0]=type(0=hold,1=MIT,3=torque), bit[2]=gravity_enable.\n"
+             "  Examples: 0x01=MIT, 0x03=torque, 0x05=MIT+gravity, 0x07=torque+gravity.\n"
              "Each arg must be a numpy array (or list) of 6 floats.\n"
              "dt_us and seq are auto-computed from wall-clock time between calls.")
 

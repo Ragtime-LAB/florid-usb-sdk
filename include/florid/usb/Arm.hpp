@@ -44,6 +44,8 @@ public:
     // The `tau` parameter is an additional feed-forward torque on top of gravity.
     // dt_us is auto-computed from wall-clock elapsed since last send.
     // Gap > 200ms is treated as a new trajectory (dt_us = 1000 µs).
+    // control_mode: bit[1:0]=type(0=hold,1=MIT,3=torque), bit[2]=gravity_enable.
+    //   e.g. 0x05 = MIT+gravity, 0x07 = torque+gravity.
     void sendMitCommand(const JointCommandPacket& cmd);
     void sendMitCommand(const float q[6], const float dq[6], const float tau[6],
                         const float kp[6], const float kd[6],
