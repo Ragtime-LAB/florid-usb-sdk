@@ -10,6 +10,6 @@ target_include_directories(florid_usb PUBLIC
 
 target_link_libraries(florid_usb PUBLIC
     usb_protocol
-    HySerial
+    astrial
     Threads::Threads
 )

@@ -1,3 +1,6 @@
 [submodule "protocols"]
 	path = protocols
 	url = https://github.com/Ragtime-LAB/florid-usb-protocols
+[submodule "3rdparty/astrial"]
+	path = 3rdparty/astrial
+	url = https://github.com/starwey604/astrial.git

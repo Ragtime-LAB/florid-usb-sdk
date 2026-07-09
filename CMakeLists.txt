@@ -11,8 +11,7 @@ option(BUILD_PYTHON "Build Python bindings (requires numpy)" OFF)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(SdkDependencies)
 
-# ── 5_Protocols (usb_protocol INTERFACE target) ──
-# Prevent 5_Protocols from also building its examples (they try to FetchContent HySerial)
+# ── Protocols (usb_protocol INTERFACE target) ──
 set(BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
 add_subdirectory(protocols ${CMAKE_CURRENT_BINARY_DIR}/protocols)
 

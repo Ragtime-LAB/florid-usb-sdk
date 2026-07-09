@@ -2,11 +2,12 @@
 
 #include <ProtocolStack.hpp>
 #include <RPL/Serializer.hpp>
-#include <HySerial/HySerial.hpp>
+#include <astrial.hpp>
 
 #include <algorithm>
 #include <atomic>
 #include <chrono>
+#include <optional>
 #include <condition_variable>
 #include <cstring>
 #include <deque>
@@ -70,30 +71,23 @@ public:
         m_stack = std::make_unique<HostStack>(make_cfg());
         register_handlers();
 
-        HySerial::Builder b;
-        b.device(m_cfg.device).baud_rate(m_cfg.baud_rate)
-         .data_bits(HySerial::DataBits::BITS_8)
-         .parity(HySerial::Parity::NONE)
-         .stop_bits(HySerial::StopBits::ONE);
+        auto result = Serial::builder()
+            .buad_rate(m_cfg.baud_rate)
+            .parity(Parity::None)
+            .stop_bits(StopBits::One)
+            .open(m_cfg.device);
+        if (!result) return false;
+        m_serial = std::move(result.value());
 
-        b.on_read([this](std::span<const std::byte> data) {
-            m_stack->isr_feed(
-                reinterpret_cast<const uint8_t*>(data.data()),
-                data.size());
+        m_serial->on_data([this](std::span<const uint8_t> data) {
+            m_stack->isr_feed(data.data(), data.size());
         });
-
-        auto res = b.build();
-        if (!res) return false;
-        m_serial = std::move(res.value());
 
         m_stack->set_send_frame([this](const uint8_t* frame, size_t len) -> bool {
-            if (!m_serial) return false;
-            m_serial->send(std::span(
-                reinterpret_cast<const std::byte*>(frame), len));
-            return true;
+            if (!m_serial.has_value()) return false;
+            auto ec = m_serial->write(std::span(frame, len));
+            return ec.has_value();
         });
-
-        m_serial->start_read(4096);
 
         m_running.store(true, std::memory_order_release);
         m_worker = std::thread(&Impl::worker_loop, this);
@@ -114,7 +108,7 @@ public:
 
     bool isConnected() const
     {
-        if (!m_serial) return false;
+        if (!m_serial.has_value()) return false;
 
         std::lock_guard lk(m_status_mutex);
         auto elapsed = std::chrono::steady_clock::now() - m_last_status_time;
@@ -479,10 +473,8 @@ private:
         uint8_t buf[512];
         auto result = ser.serialize(buf, sizeof(buf), pkt);
         if (!result.has_value()) return false;
-        if (!m_serial) return false;
-        m_serial->send(std::span(
-            reinterpret_cast<const std::byte*>(buf), *result));
-        return true;
+        if (!m_serial.has_value()) return false;
+        return m_serial->write(std::span(buf, *result)).has_value();
     }
 
     void worker_loop()
@@ -540,7 +532,7 @@ private:
 
     Config m_cfg;
     std::unique_ptr<HostStack> m_stack;
-    std::unique_ptr<HySerial::Serial> m_serial;
+    std::optional<Serial> m_serial;
     std::thread m_worker;
     std::atomic<bool> m_running{false};
 
