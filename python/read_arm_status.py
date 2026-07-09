@@ -73,11 +73,19 @@ def print_status(sample_idx: int, status: dict) -> None:
     seq = int(status["seq"])
     timestamp_us = int(status["timestamp_us"])
 
+    gripper = status.get("gripper", {})
+    gq = float(gripper.get("q", 0.0))
+    gdq = float(gripper.get("dq", 0.0))
+    gtau = float(gripper.get("tau", 0.0))
+    gtemp = float(gripper.get("temp_c", 0.0))
+    genabled = bool(gripper.get("enabled", False))
+
     print(
         f"[status] sample={sample_idx} mode={mode} seq={seq} timestamp_us={timestamp_us}\n"
         f"         q   = {np.array2string(q, precision=4, suppress_small=True)}\n"
         f"         dq  = {np.array2string(dq, precision=4, suppress_small=True)}\n"
-        f"         tau = {np.array2string(tau, precision=4, suppress_small=True)}"
+        f"         tau = {np.array2string(tau, precision=4, suppress_small=True)}\n"
+        f"         gripper  q={gq:.4f}  dq={gdq:.4f}  tau={gtau:.4f}  temp={gtemp:.1f}°C  enabled={genabled}"
     )
 
 
