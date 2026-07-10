@@ -10,6 +10,8 @@ cmake-build*
 
 # python
 .venv
+dist/
+*.egg-info/
 
 __pycache__/
 
@@ -32,4 +34,3 @@ out
 compile_commands.json
 python/plots
 __pycache__
-

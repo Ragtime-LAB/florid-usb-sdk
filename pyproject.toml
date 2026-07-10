@@ -13,6 +13,21 @@ description = "Ragtime Florid USB SDK - MIT direct control over USB CDC"
 readme = "README.md"
 requires-python = ">=3.8"
 license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: C++",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+]
 
 [tool.scikit-build]
 cmake.version = ">=3.21"
@@ -33,3 +48,14 @@ sdist.include = [
 [tool.scikit-build.cmake.define]
 BUILD_PYTHON = "ON"
 BUILD_EXAMPLES = "OFF"
+
+[tool.cibuildwheel]
+build = "cp38-* cp39-* cp310-* cp311-* cp312-*"
+skip = "*-manylinux_i686 *-musllinux_* pp*"
+test-command = "python -c \"import florid_usb; print(florid_usb.__doc__)\""
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
+
+[tool.cibuildwheel.windows]
+archs = ["AMD64"]
