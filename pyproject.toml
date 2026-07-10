@@ -1,31 +1,27 @@
 [build-system]
-requires = [
-    "scikit-build-core>=0.10",
-    "pybind11>=2.13.6",
-    "numpy",
-]
+requires = ["scikit-build-core>=0.10", "pybind11>=2.13.6", "numpy"]
 build-backend = "scikit_build_core.build"
 
 [project]
 name = "florid-usb"
-version = "0.1.0"
+version = "0.1.2"
 description = "Ragtime Florid USB SDK - MIT direct control over USB CDC"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: C++",
-    "Operating System :: Microsoft :: Windows",
-    "Operating System :: POSIX :: Linux",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: C++",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
 ]
 
 [tool.scikit-build]
@@ -34,21 +30,19 @@ cmake.build-type = "Release"
 wheel.packages = []
 sdist.inclusion-mode = "explicit"
 sdist.include = [
-    "CMakeLists.txt",
-    "cmake/**",
-    "include/**",
-    "src/**",
-    "python/*.py",
-    "python/CMakeLists.txt",
-    "python/pybind.cpp",
-    "protocols/**",
-    "3rdparty/**",
-    "README.md",
-    "LICENSE",
+  "CMakeLists.txt",
+  "cmake/**",
+  "include/**",
+  "src/**",
+  "python/*.py",
+  "python/CMakeLists.txt",
+  "python/pybind.cpp",
+  "protocols/**",
+  "3rdparty/**",
+  "README.md",
+  "LICENSE",
 ]
-sdist.exclude = [
-    "python/Ragtime_Willow_description/**",
-]
+sdist.exclude = ["python/Ragtime_Willow_description/**"]
 
 [tool.scikit-build.cmake.define]
 BUILD_PYTHON = "ON"
