@@ -20,7 +20,7 @@ add_subdirectory(src)
 
 # ── Python bindings ──
 if(BUILD_PYTHON)
-    find_package(Python COMPONENTS Interpreter Development REQUIRED)
+    find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
     find_package(pybind11 CONFIG REQUIRED)
     add_subdirectory(python)
 endif()
