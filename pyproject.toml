@@ -33,16 +33,22 @@ classifiers = [
 cmake.version = ">=3.21"
 cmake.build-type = "Release"
 wheel.packages = []
+sdist.inclusion-mode = "explicit"
 sdist.include = [
     "CMakeLists.txt",
     "cmake/**",
     "include/**",
     "src/**",
-    "python/**",
+    "python/*.py",
+    "python/CMakeLists.txt",
+    "python/pybind.cpp",
     "protocols/**",
     "3rdparty/**",
     "README.md",
     "LICENSE",
+]
+sdist.exclude = [
+    "python/Ragtime_Willow_description/**",
 ]
 
 [tool.scikit-build.cmake.define]
