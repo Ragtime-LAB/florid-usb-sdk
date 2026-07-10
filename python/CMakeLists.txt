@@ -11,3 +11,8 @@ else()
 endif()
 
 target_link_libraries(florid_usb_py PRIVATE florid_usb)
+
+install(TARGETS florid_usb_py
+    LIBRARY DESTINATION .
+    RUNTIME DESTINATION .
+)

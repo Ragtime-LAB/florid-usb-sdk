@@ -1,3 +1,35 @@
 [build-system]
-requires = ["setuptools", "pybind11", "numpy"]
-build-backend = "setuptools.build_meta"
+requires = [
+    "scikit-build-core>=0.10",
+    "pybind11>=2.13.6",
+    "numpy",
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "florid-usb"
+version = "0.1.0"
+description = "Ragtime Florid USB SDK - MIT direct control over USB CDC"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+
+[tool.scikit-build]
+cmake.version = ">=3.21"
+cmake.build-type = "Release"
+wheel.packages = []
+sdist.include = [
+    "CMakeLists.txt",
+    "cmake/**",
+    "include/**",
+    "src/**",
+    "python/**",
+    "protocols/**",
+    "3rdparty/**",
+    "README.md",
+    "LICENSE",
+]
+
+[tool.scikit-build.cmake.define]
+BUILD_PYTHON = "ON"
+BUILD_EXAMPLES = "OFF"
