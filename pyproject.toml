@@ -11,7 +11,7 @@ name = "florid-usb"
 version = "0.1.0"
 description = "Ragtime Florid USB SDK - MIT direct control over USB CDC"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -19,11 +19,10 @@ classifiers = [
     "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: C++",
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX :: Linux",
@@ -56,7 +55,7 @@ BUILD_PYTHON = "ON"
 BUILD_EXAMPLES = "OFF"
 
 [tool.cibuildwheel]
-build = "cp38-* cp39-* cp310-* cp311-* cp312-*"
+build = "cp310-* cp311-* cp312-* cp313-*"
 skip = "*-manylinux_i686 *-musllinux_* pp*"
 test-command = "python -c \"import florid_usb; print(florid_usb.__doc__)\""
 
