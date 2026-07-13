@@ -28,8 +28,12 @@ jobs:
           python-version: "3.12"
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
+        uses: pypa/cibuildwheel@v3.1.0
         env:
+          # cibuildwheel >= 3.1.0 builds CPython 3.14 by default.
+          # Skip free-threaded variants (cp313t/cp314t) unless the
+          # pybind11 extension is explicitly free-threading ready.
+          CIBW_SKIP: "cp31?t-*"
           CIBW_ARCHS_LINUX: x86_64
           CIBW_ARCHS_WINDOWS: AMD64
 
