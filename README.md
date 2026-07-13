@@ -166,6 +166,7 @@ target_link_libraries(my_app PRIVATE florid_usb)
 | `getMotorFeedback(timeout)` | 阻塞 | 请求电机详细反馈 |
 | `homeAll(timeout)` | 阻塞 | 归零所有关节 |
 | `clearFaults(timeout)` | 阻塞 | 清除所有故障 |
+| `setZero(joint_id, timeout)` | 阻塞 | 将指定关节当前位置设为零点（DM 0xFE 帧）。`joint_id` 0..5 为臂关节，6 为夹爪 |
 
 ---
 
@@ -259,6 +260,7 @@ arm.disconnect()
 | `get_motor_feedback(timeout=0.5)` | 是 | 返回 `dict {motors: [...]}`，每个电机包含 `joint_id, position_rad, speed_rad_s, torque_nm, temp_c` |
 | `home_all(timeout=0.5)` | 是 | 归零 |
 | `clear_faults(timeout=0.5)` | 是 | 清除故障 |
+| `set_zero(joint_id, timeout=0.5)` | 是 | 将指定关节当前位置设为零点（DM 0xFE 帧）。`joint_id` 0..5 为臂关节，6 为夹爪；返回 `True` 表示固件已确认 |
 
 ### Python 示例脚本
 
@@ -272,6 +274,7 @@ arm.disconnect()
 | `read_dual_status.py` | 双机械臂状态读取 |
 | `mit_pd_move_to_center.py` | MIT PD 控制移动到目标位置 |
 | `tuning_ui.py` | Tkinter 调参 GUI |
+| `gripper_controller.py` | Tkinter 夹爪控制 GUI（连接串口、实时显示夹爪状态、回零按钮） |
 | `teleop_mit.py` / `teleop_posvel.py` / `teleop_hybrid.py` | 主从遥操作（MIT / POSVEL / HYBRID 模式） |
 | `gravity_compensation_control.py` | 重力补偿控制 |
 | `computed_torque_sin_j12345.py` | 计算力矩 + 正弦轨迹 |
