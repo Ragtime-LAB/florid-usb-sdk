@@ -267,5 +267,11 @@ PYBIND11_MODULE(florid_usb, m)
         .def("clear_faults", [](Arm& self, double timeout_s) {
             return self.clearFaults(std::chrono::milliseconds(static_cast<int>(timeout_s * 1000.0)));
         }, py::arg("timeout") = 0.5,
-             "Clear all faults. Returns True on ack. timeout in seconds.");
+             "Clear all faults. Returns True on ack. timeout in seconds.")
+        .def("set_zero", [](Arm& self, uint8_t joint_id, double timeout_s) {
+            return self.setZero(joint_id,
+                std::chrono::milliseconds(static_cast<int>(timeout_s * 1000.0)));
+        }, py::arg("joint_id"), py::arg("timeout") = 0.5,
+             "Set the current position of one joint (0..5) or gripper (6) as its zero "
+             "point (DM 0xFE frame). Returns True on firmware ACK.");
 }

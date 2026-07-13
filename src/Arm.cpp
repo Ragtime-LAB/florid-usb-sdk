@@ -402,6 +402,29 @@ public:
         return f.wait_for(timeout) == std::future_status::ready && f.get();
     }
 
+    bool setZero(uint8_t joint_id, std::chrono::milliseconds timeout)
+    {
+        auto p = std::make_shared<std::promise<bool>>();
+        auto f = p->get_future();
+        post([this, p, joint_id]() {
+            m_stack->send<SetZeroRequestPacket, SetZeroResponsePacket>(
+                SetZeroCommand{.joint_id = joint_id},
+                [p](const uint8_t* bytes, size_t size) {
+                    bool ok = false;
+                    if (size >= sizeof(SetZeroResponsePacket)) {
+                        SetZeroResponsePacket rsp{};
+                        std::memcpy(&rsp, bytes, sizeof(rsp));
+                        ok = rsp.payload.status == SetZeroStatus::Ok;
+                    }
+                    p->set_value(ok);
+                },
+                [p](SessionError) { p->set_value(false); },
+                m_cfg.session_timeout,
+                static_cast<size_t>(m_cfg.max_retries));
+        });
+        return f.wait_for(timeout) == std::future_status::ready && f.get();
+    }
+
 private:
     HostStack::Config make_cfg() const
     {
@@ -637,5 +660,6 @@ MotorFeedbackArray Arm::getMotorFeedback(std::chrono::milliseconds timeout) { re
 
 bool Arm::homeAll(std::chrono::milliseconds timeout) { return m_impl->homeAll(timeout); }
 bool Arm::clearFaults(std::chrono::milliseconds timeout) { return m_impl->clearFaults(timeout); }
+bool Arm::setZero(uint8_t joint_id, std::chrono::milliseconds timeout) { return m_impl->setZero(joint_id, timeout); }
 
 } // namespace florid::usb

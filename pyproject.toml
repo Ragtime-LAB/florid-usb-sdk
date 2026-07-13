@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "florid-usb"
-version = "0.1.2"
+version = "0.2.0"
 description = "Ragtime Florid USB SDK - MIT direct control over USB CDC"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,6 +19,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Programming Language :: C++",
   "Operating System :: Microsoft :: Windows",
   "Operating System :: POSIX :: Linux",
@@ -49,7 +50,7 @@ BUILD_PYTHON = "ON"
 BUILD_EXAMPLES = "OFF"
 
 [tool.cibuildwheel]
-build = "cp310-* cp311-* cp312-* cp313-*"
+build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
 skip = "*-manylinux_i686 *-musllinux_* pp*"
 test-command = "python -c \"import florid_usb; print(florid_usb.__doc__)\""
 

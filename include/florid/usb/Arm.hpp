@@ -81,6 +81,8 @@ public:
     // ── 杂项（阻塞） ──
     bool homeAll(std::chrono::milliseconds timeout = std::chrono::milliseconds{500});
     bool clearFaults(std::chrono::milliseconds timeout = std::chrono::milliseconds{500});
+    bool setZero(uint8_t joint_id,
+                 std::chrono::milliseconds timeout = std::chrono::milliseconds{500});
 
 private:
     class Impl;
