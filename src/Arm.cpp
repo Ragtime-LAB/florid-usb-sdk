@@ -69,6 +69,16 @@ public:
 
         // Recreate ProtocolStack for a clean session
         m_stack = std::make_unique<HostStack>(make_cfg());
+        {
+            const auto now_ticks =
+                static_cast<uint64_t>(std::chrono::steady_clock::now().time_since_epoch().count());
+            const auto tid_hash =
+                static_cast<uint64_t>(std::hash<std::thread::id>{}(std::this_thread::get_id()));
+            uint32_t seed = static_cast<uint32_t>((now_ticks ^ tid_hash) & 0x7fffffffU);
+            if (seed == 0)
+                seed = 1;
+            m_stack->session().set_next_tx_id(seed);
+        }
         register_handlers();
 
         auto result = Serial::builder()
